@@ -1,5 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   spliter.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/07 23:55:24 by hitran            #+#    #+#             */
+/*   Updated: 2024/07/08 00:02:29 by hitran           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
+void	free_array(char **array)
+{
+	if (array)
+	{
+		while (*array)
+			free(*array++);
+		free(array);
+	}
+}
 static int	count_words(char *cmd)
 {
 	int	i;
@@ -21,16 +42,6 @@ static int	count_words(char *cmd)
 	return (words);
 }
 
-static void	free_split(char **final)
-{
-	int	i;
-
-	i = -1;
-	while (final[++i])
-		free(final[i]);
-	free(final);
-}
-
 static char	**final_split(char **final, char *cmd, int words)
 {
 	int	counter;
@@ -48,7 +59,7 @@ static char	**final_split(char **final, char *cmd, int words)
 			i++;
 		final[counter] = ft_substr(cmd, 0, i);
 		if (!final[counter])
-			return (free_split(final), NULL);
+			return (free_array(final), NULL);
 		cmd += i;
 	}
 	return (final[counter] = NULL, final);

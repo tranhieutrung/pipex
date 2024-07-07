@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/07 23:54:51 by hitran            #+#    #+#             */
+/*   Updated: 2024/07/07 23:55:50 by hitran           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
@@ -33,14 +45,5 @@ void	cleaner_matrix(char **matrix);
 int		verify_quote(char *cmd, int i);
 int		is_quote(char *cmd, int i);
 char	*remove_quote(char *trim, char quote);
-
-//----------UTILS----------//
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *s, int c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_strdup(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	**ft_split(char const *s, char c);
 
 #endif //PIPEX_BONUS
