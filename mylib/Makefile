@@ -6,19 +6,17 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 18:50:22 by hitran            #+#    #+#              #
-#    Updated: 2024/07/03 18:52:47 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/07 18:35:21 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Source files
 LIBFT			=	libft
 PRINTF			=	printf
-GNL				=	gnl
 
 SDIR			= 	./srcs
 LIBFT_DIR		=	$(SDIR)/$(LIBFT)
 PRINTF_DIR		=	$(SDIR)/$(PRINTF)
-GNL_DIR			=	$(SDIR)/$(GNL)
 
 LIBFT_FILES		=	ft_isalpha.c		ft_isdigit.c		ft_isalnum.c	\
 					ft_isascii.c		ft_isprint.c		ft_strlen.c		\
@@ -41,8 +39,6 @@ PRINTF_FILES	=	ft_printf.c			ft_putbase.c		ft_putchar.c	\
 					ft_putstr.c			ft_putaddr.c		ft_putnbr.c		\
 					ft_putuint.c		ft_puthexa.c
 
-GNL_FILES		=	get_next_line.c		get_next_line_utils.c
-
 LIBFT_SRCS		=	$(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
 PRINTF_SRCS		=	$(addprefix $(PRINTF_DIR)/, $(PRINTF_FILES))
 GNL_SRCS		=	$(addprefix $(GNL_DIR)/, $(GNL_FILES))
@@ -51,12 +47,10 @@ GNL_SRCS		=	$(addprefix $(GNL_DIR)/, $(GNL_FILES))
 ODIR 			= ./objs
 LIBFT_ODIR 		= $(ODIR)/$(LIBFT)
 PRINTF_ODIR 	= $(ODIR)/$(PRINTF)
-GNL_ODIR 		= $(ODIR)/$(GNL)
 
 LIBFT_OBJS		= $(addprefix $(LIBFT_ODIR)/, $(notdir $(LIBFT_SRCS:.c=.o)))
 PRINTF_OBJS 	= $(addprefix $(PRINTF_ODIR)/, $(notdir $(PRINTF_SRCS:.c=.o)))
-GNL_OBJS 		= $(addprefix $(GNL_ODIR)/, $(notdir $(GNL_SRCS:.c=.o)))
-OBJS			= $(LIBFT_OBJS) $(PRINTF_OBJS) $(GNL_OBJS)
+OBJS			= $(LIBFT_OBJS) $(PRINTF_OBJS)
 
 # Library name
 NAME			=	mylib.a
@@ -78,9 +72,6 @@ $(LIBFT_ODIR)%.o: $(LIBFT_DIR)%.c | $(LIBFT_ODIR)
 	@$(CC) -c $< -o $@
 
 $(PRINTF_ODIR)%.o: $(PRINTF_DIR)%.c | $(PRINTF_ODIR)
-	@$(CC) -c $< -o $@
-
-$(GNL_ODIR)%.o: $(GNL_DIR)%.c | $(GNL_ODIR)
 	@$(CC) -c $< -o $@
 
 # Target to create the library
