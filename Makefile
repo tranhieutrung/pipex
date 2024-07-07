@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/07/07 23:44:57 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/07 23:58:02 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,25 +23,19 @@ MYLIB_DIR	 	= ./mylib
 # Source's directories
 MAIN_DIR 		= main
 ALGO_DIR 		= algo
-PARSE_DIR 		= parse
-UTILS_DIR 		= utils
 
 # Source files by directory
 MAIN_FILES 		= 	pipex.c
-ALGO_FILES 		= 	
-UTILS_FILES 	= 	
+ALGO_FILES 		= 	controller.c	pathfinder.c	quote.c	spliter.c
 
 MAIN_FILES_BN 	= 	pipex_bonus.c
 UTILS_FILES_BN 	= 	
-OPS_FILES_BN	= 	
 
 MAN_SRCS		= 	$(addprefix $(MAN_DIR)/$(MAIN_DIR)/, $(MAIN_FILES)) \
 					$(addprefix $(MAN_DIR)/$(ALGO_DIR)/, $(ALGO_FILES)) \
-					$(addprefix $(MAN_DIR)/$(UTILS_DIR)/, $(UTILS_FILES))
 
 BN_SRCS			=	$(addprefix $(BONUS_DIR)/$(MAIN_DIR)/, $(MAIN_FILES_BN)) \
 					$(addprefix $(BONUS_DIR)/$(ALGO_DIR)/, $(ALGO_FILES_BN)) \
-					$(addprefix $(BONUS_DIR)/$(UTILS_DIR)/, $(UTILS_FILES_BN))
 
 # Library
 MYLIB 			= $(MYLIB_DIR)/mylib.a
