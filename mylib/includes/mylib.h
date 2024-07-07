@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:07:44 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/03 18:49:05 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/07 18:35:45 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # endif
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 10
 # endif
 
 typedef struct s_list
@@ -90,13 +90,5 @@ int		ft_putaddr(void *ptr);
 int		ft_putnbr(int n);
 int		ft_putuint(unsigned int n);
 int		ft_puthexa(unsigned int n, char c);
-
-//Get next line
-char	*get_next_line(int fd);
-char	*ft_strjoin_gnl(char *s1, char *s2);
-int		ft_strlen_gnl(char *str);
-char	*ft_strchr_gnl(const char *s, int c);
-char	*ft_substr_gnl(char const *s, unsigned int start, size_t len);
-char	*ft_free_gnl(char **str);
 
 #endif
