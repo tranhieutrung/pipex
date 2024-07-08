@@ -1,26 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spliter.c                                          :+:      :+:    :+:   */
+/*   split_word.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:55:24 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/08 00:02:29 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/08 08:38:18 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_array(char **array)
-{
-	if (array)
-	{
-		while (*array)
-			free(*array++);
-		free(array);
-	}
-}
 static int	count_words(char *cmd)
 {
 	int	i;
@@ -59,13 +50,13 @@ static char	**final_split(char **final, char *cmd, int words)
 			i++;
 		final[counter] = ft_substr(cmd, 0, i);
 		if (!final[counter])
-			return (free_array(final), NULL);
+			return (ft_free_strptr(final), NULL);
 		cmd += i;
 	}
 	return (final[counter] = NULL, final);
 }
 
-char	**spliter(char *cmd)
+char	**split_word(char *cmd)
 {
 	int		i;
 	int		words;

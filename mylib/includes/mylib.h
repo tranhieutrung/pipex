@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:07:44 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/07 18:35:45 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/08 08:36:33 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*ft_strcpy(char *dest, char *src);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_max(int a, int b);
 void	ft_free_array(size_t i, char **array);
+void	ft_free_strptr(char **strptr);
 
 //Printf
 int		ft_printf(const char *str, ...);

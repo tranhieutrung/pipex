@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 18:50:22 by hitran            #+#    #+#              #
-#    Updated: 2024/07/07 18:35:21 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/08 08:36:48 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ LIBFT_FILES		=	ft_isalpha.c		ft_isdigit.c		ft_isalnum.c	\
 					ft_lstsize.c		ft_lstlast.c		ft_lstadd_back.c \
 					ft_lstdelone.c 		ft_lstclear.c 		ft_lstiter.c	\
 					ft_lstadd_front.c	ft_strcpy.c			ft_strcmp.c		\
-					ft_max.c			ft_free_array.c
+					ft_max.c			ft_free_array.c		ft_free_strptr.c
 					
 PRINTF_FILES	=	ft_printf.c			ft_putbase.c		ft_putchar.c	\
 					ft_putstr.c			ft_putaddr.c		ft_putnbr.c		\

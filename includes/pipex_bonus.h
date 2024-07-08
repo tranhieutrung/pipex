@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:51 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/07 23:55:50 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/08 08:59:53 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,9 @@ typedef struct s_pipex
 }	t_pipex;
 
 //----------PIPEX----------//
-void	cmd_controller(t_pipex *pipex, int cmds_size, char **cmds, int i);
-char	**spliter(char *cmd);
-char	*pathfinder(t_pipex *pipex);
-
-//----------BONUS----------//
-char	*get_next_line(int fd);
-
-//----------CLEANER----------//
-void	cleaner_matrix(char **matrix);
+void	handle_pipe(t_pipex *pipex, char **argv);
+char	**split_word(char *cmd);
+char	*find_path(t_pipex *pipex);
 
 //----------QUOTE----------//
 int		verify_quote(char *cmd, int i);
