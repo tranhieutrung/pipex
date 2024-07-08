@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:26 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/08 00:00:31 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/08 08:50:01 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	main(int argc, char **argv, char **env_pt)
 	pipex.cmdargs = NULL;
 	pipex.envi = env_pt;
 	pipex.fd[0] = open(argv[1], O_RDONLY);
-	pipex.fd[1] = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 00700);
+	pipex.fd[1] = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 00700);
 	if (pipex.fd[0] < 0 || pipex.fd[1] < 0)
 		return (write(2, ".ERROR: start_pipex.\n", 20));
-	cmd_controller(&pipex, argc, argv, 1);
+	handle_pipe(&pipex, argv);
 	return (0);
 }

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathfinder.c                                       :+:      :+:    :+:   */
+/*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:55:10 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/07 23:55:13 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/08 08:52:27 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*pathfinder(t_pipex *pipex)
+char	*find_path(t_pipex *pipex)
 {
 	int		i;
 	int		ii;
@@ -36,6 +36,6 @@ char	*pathfinder(t_pipex *pipex)
 			return (path);
 		free(path);
 	}
-	cleaner_matrix(paths);
+	ft_free_strptr(paths);
 	return (NULL);
 }

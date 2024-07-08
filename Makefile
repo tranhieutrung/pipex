@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/07/07 23:58:02 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/08 08:59:53 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ ALGO_DIR 		= algo
 
 # Source files by directory
 MAIN_FILES 		= 	pipex.c
-ALGO_FILES 		= 	controller.c	pathfinder.c	quote.c	spliter.c
+ALGO_FILES 		= 	handle_pipe.c	find_path.c	quote.c	split_word.c
 
 MAIN_FILES_BN 	= 	pipex_bonus.c
 UTILS_FILES_BN 	= 	
