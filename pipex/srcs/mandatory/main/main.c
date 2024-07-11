@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:26 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/11 15:33:32 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/11 21:20:53 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	excecute_command(t_pipex *pipex, char *command)
 		ft_free_strptr(splitted_command);
 		exit (1);
 	}
-	if (access(command_path, F_OK | X_OK) != 0 && ft_strchr(*splitted_command, '/'))
+	if (access(command_path, F_OK | X_OK) != 0
+		&& ft_strchr(*splitted_command, '/'))
 	{
 		ft_printf_fd(2, "pipex: %s: command not found\n",  *splitted_command);
 		ft_free_strptr(splitted_command);
@@ -62,7 +63,7 @@ void	execute_parent_process(t_pipex *pipex)
 {
 	close(pipex->fd[0]);
 	pipex->fd[1] = open(pipex->argv[pipex->argc - 1],
-					O_CREAT | O_RDWR | O_TRUNC, 00700);//00644
+					O_CREAT | O_RDWR | O_TRUNC, 00700);
 	if (pipex->fd[1] == -1)
 	{
 		ft_printf_fd(2, "pipex: %s: %s\n",
@@ -119,7 +120,7 @@ int	main(int argc, char **argv, char **envp)
 	if (pipe(pipex->pipe) == -1)
 	{
 		perror("pipex: pipe");
-		exit (1);
+		return (1);
 	}
 	execute_pipex(&pipex);
 	return (0);
