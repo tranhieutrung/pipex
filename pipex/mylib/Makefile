@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 18:50:22 by hitran            #+#    #+#              #
-#    Updated: 2024/07/11 08:54:04 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/11 11:13:18 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,11 @@ LIBFT_FILES		=	ft_isalpha.c		ft_isdigit.c		ft_isalnum.c	\
 					ft_lstsize.c		ft_lstlast.c		ft_lstadd_back.c \
 					ft_lstdelone.c 		ft_lstclear.c 		ft_lstiter.c	\
 					ft_lstadd_front.c	ft_strcpy.c			ft_strcmp.c		\
-					ft_max.c			ft_free_array.c		ft_free_strptr.c
+					ft_max.c			ft_free_array.c
 					
-PRINTF_FILES	=	ft_printf_fd.c			ft_putbase_fd.c		ft_putchar_fd.c	\
-					ft_putstr_fd.c			ft_putaddr_fd.c		ft_putnbr_fd.c		\
-					ft_putuint_fd.c			ft_puthexa_fd.c
+PRINTF_FILES	=	ft_printf_fd.c		ft_putbase_fd.c		ft_putchar_fd.c	\
+					ft_putstr_fd.c		ft_putaddr_fd.c		ft_putnbr_fd.c	\
+					ft_putuint_fd.c		ft_puthexa_fd.c
 
 LIBFT_SRCS		=	$(addprefix $(LIBFT_DIR)/, $(LIBFT_FILES))
 PRINTF_SRCS		=	$(addprefix $(PRINTF_DIR)/, $(PRINTF_FILES))
