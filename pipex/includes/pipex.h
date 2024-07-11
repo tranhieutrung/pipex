@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/11 21:08:03 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/11 21:26:44 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 # define PIPEX_H
 
 # include "mylib.h"
-// # include <unistd.h> //WRITE, FORK, PIPE, EXECVE
-# include <fcntl.h> //OPEN, CLOSE
-# include <sys/wait.h> //WAITPID
-// # include <stdio.h> //PERROR
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <stdio.h> 
 
 typedef struct s_pipex
 {
@@ -30,9 +29,10 @@ typedef struct s_pipex
 }	t_pipex;
 
 // ALGORITHM
-void	handle_pipe(t_pipex *pipex,);
-char	**split_word(char *cmd);
-char	*find_path(t_pipex *pipex);
+void	execute_pipex(t_pipex *pipex);
+void	execute_child_process(t_pipex *pipex);
+void	execute_parent_process(t_pipex *pipex);
+void	excecute_command(t_pipex *pipex, char *command);
 
 // UTILS
 char	*find_command_path(t_pipex *pipex, char *command);
