@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:15:00 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/12 21:55:11 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:05:21 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static void	excecute_command(t_pipex *pipex, char *command)
 	splitted_command = split_command(command);
 	if (!splitted_command)
 	{
-		ft_printf_fd(2, "split command failed\n");
+		ft_printf_fd(2, "pipex: split command failed\n");
 		exit(1);
 	}
-	command_path = find_command_path(pipex, splitted_command);
+	command_path = find_command_path(pipex, *splitted_command);
 	if (!command_path || (access(command_path, F_OK | X_OK) != 0
 			&& ft_strchr(*splitted_command, '/')))
 	{
