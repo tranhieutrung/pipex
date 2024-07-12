@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:24 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/12 22:14:23 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/12 23:30:43 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,6 @@ int	verify_quote(char *cmd, int i)
 	return (0);
 }
 
-char	*remove_quote(char *trim, char quote)
-{
-	size_t	trim_size;
-	char	s_quote[1];
-	char	*new;
-
-	s_quote[0] = quote;
-	while (*trim && ft_strchr(s_quote, *trim))
-		trim++;
-	trim_size = ft_strlen(trim) - 1;
-	while (trim[trim_size] && ft_strchr(s_quote, trim[trim_size]))
-		trim_size--;
-	new = ft_substr(trim, 0, trim_size + 1);
-	return (new);
-}
-
 static int	count_words(char *command)
 {
 	int	i;
@@ -78,7 +62,7 @@ static int	count_words(char *command)
 	return (words);
 }
 
-static char	**final_split(char **final, char *command, int words)
+static char	**split_word(char *command, char **final, int words)
 {
 	int	counter;
 	int	i;
@@ -107,7 +91,6 @@ char	**split_command(char *command)
 	int		i;
 	int		words;
 	char	**array;
-	char	**trim;
 
 	if (!command)
 		return (NULL);
@@ -115,13 +98,13 @@ char	**split_command(char *command)
 	array = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!array)
 		return (NULL);
-	array = word_split(command, array, words);
+	array = split_word(command, array, words);
 	i = -1;
-	while (trim[++i])
+	while (array[++i])
 	{
-		if ((trim[i][0] == '\'' || trim[i][0] == '\"')
-			&& verify_quote(trim[i], 0))
-			trim[i] = remove_quote(trim[i], trim[i][0]);
+		if ((array[i][0] == '\'' || array[i][0] == '\"')
+			&& verify_quote(array[i], 0))
+			array[i] = ft_substr(array[i], 1, ft_strlen(array[i]) - 2);
 	}
-	return (trim);
+	return (array);
 }

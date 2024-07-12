@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/12 21:29:49 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 00:01:15 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_pipex
 }	t_pipex;
 
 void	execute_pipex(t_pipex *pipex);
-char	*find_command_path(t_pipex *pipex, char **commands);
+char	*find_command_path(t_pipex *pipex, char *commands);
 char	**split_command(char *command);
 
 #endif
