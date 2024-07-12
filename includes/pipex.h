@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/08 08:59:53 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/12 21:29:49 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,24 @@
 # define PIPEX_H
 
 # include "mylib.h"
-// # include <unistd.h> //WRITE, FORK, PIPE, EXECVE
-// # include <stdlib.h> //MALLOC, NULL
-# include <fcntl.h> //OPEN, CLOSE
-# include <sys/wait.h> //WAITPID
-# include <stdio.h> //PERROR
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <stdio.h>
+# include <errno.h>
+# include <string.h>
 
 typedef struct s_pipex
 {
-	pid_t	pid;
+	int		argc;
+	char	**argv;
+	char	**envp;
 	int		pipe[2];
 	int		fd[2];
-	char	*path;
-	char	**cmdargs;
-	char	**envi;
+	pid_t	pid;
 }	t_pipex;
 
-//----------PIPEX----------//
-void	handle_pipe(t_pipex *pipex, char **argv);
-char	**split_word(char *cmd);
-char	*find_path(t_pipex *pipex);
+void	execute_pipex(t_pipex *pipex);
+char	*find_command_path(t_pipex *pipex, char **commands);
+char	**split_command(char *command);
 
-//----------QUOTE----------//
-int		verify_quote(char *cmd, int i);
-int		is_quote(char *cmd, int i);
-char	*remove_quote(char *trim, char quote);
-
-#endif //PIPEX
+#endif

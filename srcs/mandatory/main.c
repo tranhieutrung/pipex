@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 13:24:37 by hitran            #+#    #+#             */
-/*   Updated: 2024/06/07 09:41:50 by hitran           ###   ########.fr       */
+/*   Created: 2024/07/12 21:18:34 by hitran            #+#    #+#             */
+/*   Updated: 2024/07/12 21:18:36 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mylib.h"
+#include "pipex.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+int	main(int argc, char **argv, char **envp)
 {
-	if (!lst || !new)
-		return ;
-	new->next = *lst;
-	*lst = new;
+	t_pipex	pipex;
+
+	if (argc != 5)
+	{
+		ft_printf_fd(2, "pipex: invalid number of arguments.\n");
+		return (1);
+	}
+	pipex.argc = argc;
+	pipex.argv = argv;
+	pipex.envp = envp;
+	if (pipe(pipex.pipe) == -1)
+	{
+		perror("pipex: pipe\n");
+		exit (1);
+	}
+	execute_pipex(&pipex);
+	return (0);
 }

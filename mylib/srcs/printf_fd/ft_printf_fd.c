@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 22:05:38 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/11 08:55:18 by hitran           ###   ########.fr       */
+/*   Created: 2024/07/11 11:06:16 by hitran            #+#    #+#             */
+/*   Updated: 2024/07/11 11:12:11 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	ft_printf_fd(int fd, const char *str, ...)
 	int				temp;
 
 	len = 0;
+	if (!str)
+		return (-1);
 	va_start(args, str);
 	while (*str)
 	{
