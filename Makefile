@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/07/08 08:59:53 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/12 21:29:16 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,27 +16,21 @@ CFLAGS 			= -Wall -Wextra -Werror
 INCLUDES 		= -I./includes -I./mylib/includes
 
 # Directories
-MAN_DIR 		= ./mandatory
-BONUS_DIR		= ./bonus
+MAN_DIR 		= ./srcs/mandatory
+BONUS_DIR		= ./srcs/bonus
 MYLIB_DIR	 	= ./mylib
 
-# Source's directories
-MAIN_DIR 		= main
-ALGO_DIR 		= algo
-
 # Source files by directory
-MAIN_FILES 		= 	pipex.c
-ALGO_FILES 		= 	handle_pipe.c	find_path.c	quote.c	split_word.c
+MAN_FILES 		= 	main.c					execute_pipex.c 	\
+					find_command_path.c		spit_command.c
 
-MAIN_FILES_BN 	= 	pipex_bonus.c
-UTILS_FILES_BN 	= 	
+BONUS_FILES 	= 	main_bonus.c
+	
 
-MAN_SRCS		= 	$(addprefix $(MAN_DIR)/$(MAIN_DIR)/, $(MAIN_FILES)) \
-					$(addprefix $(MAN_DIR)/$(ALGO_DIR)/, $(ALGO_FILES)) \
+MAN_SRCS		= 	$(addprefix $(MAN_DIR)/, $(MAN_FILES))
 
-BN_SRCS			=	$(addprefix $(BONUS_DIR)/$(MAIN_DIR)/, $(MAIN_FILES_BN)) \
-					$(addprefix $(BONUS_DIR)/$(ALGO_DIR)/, $(ALGO_FILES_BN)) \
-
+BONUS_SRCS		=	$(addprefix $(BONUS_DIR)/, $(BONUS_FILES))
+					
 # Library
 MYLIB 			= $(MYLIB_DIR)/mylib.a
 

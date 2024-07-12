@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:42 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/09 21:47:54 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/08 08:55:59 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	main(int argc, char **argv, char **envp)
 	int		hd[2];
 
 	if (argc < 5)
-		return (ft_(2, "error: invalid arguments.\n", 37));
+		return (write(2, ".ERROR: Invalid Number Of Arguments.\n", 37));
 	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")) == 0)
 	{
 		if (argc < 6)
