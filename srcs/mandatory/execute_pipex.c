@@ -6,13 +6,13 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:15:00 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 00:05:21 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 22:59:08 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	ft_dup2(int from_fd1, int to_fd1, int from_fd2, int to_fd2)
+static void	redirect_fds(int from_fd1, int to_fd1, int from_fd2, int to_fd2)
 {
 	dup2(from_fd1, to_fd1);
 	close(from_fd1);
@@ -31,17 +31,12 @@ static void	excecute_command(t_pipex *pipex, char *command)
 		ft_printf_fd(2, "pipex: split command failed\n");
 		exit(1);
 	}
-	command_path = find_command_path(pipex, *splitted_command);
-	if (!command_path || (access(command_path, F_OK | X_OK) != 0
-			&& ft_strchr(*splitted_command, '/')))
-	{
-		ft_printf_fd(2, "pipex: %s: command not found\n", *splitted_command);
-		ft_free_strptr(splitted_command);
-		exit(127);
-	}
+	command_path = find_command_path(pipex, splitted_command);
+	ft_printf_fd(1, "cmd path = %s\n", command_path);
+	if (!command_path)
+		handle_error_127(*splitted_command, splitted_command);
 	execve(command_path, splitted_command, pipex->envp);
-	ft_printf_fd(2, "execve fail: %s\n", strerror(errno));
-	exit (1);
+	handle_error_exec(command_path, splitted_command);
 }
 
 static void	execute_child_process(t_pipex *pipex)
@@ -53,7 +48,7 @@ static void	execute_child_process(t_pipex *pipex)
 		close(pipex->pipe[1]);
 		exit(1);
 	}
-	ft_dup2(pipex->fd[0], 0, pipex->pipe[1], 1);
+	redirect_fds(pipex->fd[0], 0, pipex->pipe[1], 1);
 	excecute_command(pipex, pipex->argv[2]);
 }
 
@@ -78,11 +73,11 @@ static void	execute_parent_process(t_pipex *pipex)
 			close(pipex->pipe[0]);
 			exit(1);
 		}
-		ft_dup2(pipex->pipe[0], 0, pipex->fd[1], 1);
+		redirect_fds(pipex->pipe[0], 0, pipex->fd[1], 1);
 		excecute_command(pipex, pipex->argv[3]);
 	}
 	else
-		waitpid(pipex->pid, NULL, 0);
+		waitpid(pipex->pid, &pipex->error, 0);//&pipex->error
 }
 
 void	execute_pipex(t_pipex *pipex)
@@ -97,14 +92,14 @@ void	execute_pipex(t_pipex *pipex)
 	}
 	else if (pipex->pid == 0)
 	{
-		close(pipex->pipe[0]);
+		close(pipex->pipe[0]); //dong pipe doc, khi thuc hien lenh cmd1 o infile se ghi ra pipe[1]
 		execute_child_process(pipex);
 	}
 	else
 	{
-		close(pipex->pipe[1]);
+		close(pipex->pipe[1]);// dong pipe[1] de khi thuc hien lenh cmd2 se doc lenh tu pipe[0]
 		execute_parent_process(pipex);
-		close(pipex->pipe[0]);
-		waitpid(pipex->pid, NULL, 0);
+		close(pipex->pipe[0]);// dong pipe[0] de ket thuc pipe
+		waitpid(pipex->pid, &pipex->error, 0);
 	}
 }

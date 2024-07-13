@@ -6,22 +6,22 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 00:28:33 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 23:01:00 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	is_valid_path(char *command)
+static int	is_valid_path(char **command)
 {
-	if (ft_strchr(command, '/'))
+	if (ft_strchr(*command, '/'))
 	{
-		if (access(command, F_OK) == 0)
+		if (access(*command, F_OK) == 0)
 			return (1);
 		else
 		{
-			ft_printf_fd(2,"pipex: %s: No such file or directory\n", command);
-			ft_free_strptr(&command);
+			ft_printf_fd(2,"pipex: %s: No such file or directory\n", *command);
+			ft_free_strptr(command);
 			exit(127);
 		}
 	}
@@ -90,17 +90,17 @@ static char	*get_command_path(char **envp_paths, char *command)
 	return (NULL);
 }
 
-char	*find_command_path(t_pipex *pipex, char *command)
+char	*find_command_path(t_pipex *pipex, char **command)
 {
 	char	**envp_paths;
 	char	*command_path;
 
 	if (is_valid_path(command))
-		return (command);
-	envp_paths = find_envp_path(pipex->envp, command);
+		return (*command);
+	envp_paths = find_envp_path(pipex->envp, *command);
 	if (!envp_paths)
 		return (NULL);
-	command_path = get_command_path(envp_paths, command);
+	command_path = get_command_path(envp_paths, *command);
 	if (!command_path)
 		return (NULL);
 	return (command_path);
