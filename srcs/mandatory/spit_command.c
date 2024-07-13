@@ -6,13 +6,13 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:24 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 22:35:37 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 23:14:40 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	locate_quote(char *command, int i)
+static int	locate_quote(char *command, int i)
 {
 	if (command[i] == '\'')
 	{
@@ -29,7 +29,7 @@ int	locate_quote(char *command, int i)
 	return (i);
 }
 
-int	is_quote(char *command, int i)
+static int	is_quote(char *command, int i)
 {
 	char	quote;
 
@@ -106,13 +106,14 @@ char	**split_command(char *command)
 	trimmed_command = ft_strtrim(command, " ");
 	if (!trimmed_command)
 		exit(1);
-	if (!*trimmed_command)
+	if (*trimmed_command == 32 || !*trimmed_command)
 		handle_empty_command(trimmed_command, command);
-	words = count_words(command);
+	words = count_words(trimmed_command);
 	array = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!array)
 		return (NULL);
-	array = split_word(command, array, words);
+	array = split_word(trimmed_command, array, words);
+	free (trimmed_command);
 	i = -1;
 	while (array[++i])
 	{

@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 23:01:00 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 23:44:42 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	is_valid_path(char **command)
 	return (0);
 }
 
-static char	**find_envp_path(char **envp, char *command)
+static char	**find_envp_path(char **envp, char **command)
 {
 	int		i;
 	char	**envp_paths;
@@ -39,7 +39,7 @@ static char	**find_envp_path(char **envp, char *command)
 	if (!envp[i])
 	{
 		ft_printf_fd(2,"pipex: %s: No such file or directory\n", command);
-		ft_free_strptr(&command);
+		ft_free_strptr(command);
 		exit(127);
 	}
 	envp_paths = ft_split(envp[i] + 5, ':');
@@ -83,6 +83,7 @@ static char	*get_command_path(char **envp_paths, char *command)
 			return (command_path);
 		}
 		free(command_path);
+		ft_printf_fd(2, "i = %d\n", i);
 		i++;
 	}
 	ft_free_strptr(envp_paths);
@@ -97,9 +98,13 @@ char	*find_command_path(t_pipex *pipex, char **command)
 
 	if (is_valid_path(command))
 		return (*command);
-	envp_paths = find_envp_path(pipex->envp, *command);
+	envp_paths = find_envp_path(pipex->envp, command);
 	if (!envp_paths)
 		return (NULL);
+	int i =0;
+	while (envp_paths[i]){
+		ft_printf_fd(1, "envp[%d] = %s\n", i, envp_paths[i]);
+		i++;}
 	command_path = get_command_path(envp_paths, *command);
 	if (!command_path)
 		return (NULL);

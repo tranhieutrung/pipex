@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 22:34:57 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 23:12:17 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	handle_error_exec(char *command_path, char **splitted_command)
 
 void	handle_empty_command(char *trimmed_command, char *command)
 {
-	if (*trimmed_command == ' ' || !*trimmed_command)
-		ft_printf_fd(2, "pipex: %s: command not found\n", command);
+	ft_printf_fd(2, "pipex: %s: command not found\n", command);
 	free(trimmed_command);
 	exit (127);
 }
