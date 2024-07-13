@@ -6,84 +6,92 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:24 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/12 23:30:43 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 22:35:37 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	is_quote(char *cmd, int i)
+int	locate_quote(char *command, int i)
 {
-	if (cmd[i] == '\'')
+	if (command[i] == '\'')
 	{
 		i++;
-		while (cmd[i] != '\'')
+		while (command[i] != '\'')
 			i++;
 	}
-	else if (cmd[i] == '\"')
+	else if (command[i] == '\"')
 	{
 		i++;
-		while (cmd[i] != '\"')
+		while (command[i] != '\"')
 			i++;
 	}
 	return (i);
 }
 
-int	verify_quote(char *cmd, int i)
+int	is_quote(char *command, int i)
 {
 	char	quote;
 
-	quote = cmd[i];
-	while (cmd[++i])
-		if (cmd[i] == quote)
-			return (1);
+	quote = command[i];
+	if (quote == '\'' || quote == '\"')
+	{
+		while (command[++i])
+			if (command[i] == quote)
+				return (1);
+	}
 	return (0);
 }
 
 static int	count_words(char *command)
 {
-	int	i;
 	int	words;
+	int	i;
 
-	i = 0;
 	words = 0;
+	i = 0;
 	while (command[i])
 	{
-		if (command[i] != ' ')
+		if (command[i] != 32)
+		{
 			words++;
-		if ((command[i] == '\'' || command[i] == '\"')
-			&& verify_quote(command, i))
-			i += is_quote(command, i);
-		while (command[i] && command[i] != ' ')
-			command++;
-		while (command[i] && command[i] == ' ')
-			command++;
+			if (is_quote(command, i))
+				i += locate_quote(command, i);
+			while (command[i] && command[i] != 32)
+				i++;
+		}
+		else
+			i++;
 	}
 	return (words);
 }
 
-static char	**split_word(char *command, char **final, int words)
+static char	**split_word(char *command, char **array, int words)
 {
-	int	counter;
 	int	i;
+	int	j;
 
-	counter = -1;
-	while (++counter < words)
+	i = 0;
+	while (i < words)
 	{
-		while (*command == ' ')
+		while (*command == 32)
 			command++;
-		i = 0;
-		if ((command[i] == '\'' || command[i] == '\"')
-			&& verify_quote(command, i))
-			i += is_quote(command, i);
-		while (command[i] && command[i] != ' ')
-			i++;
-		final[counter] = ft_substr(command, 0, i);
-		if (!final[counter])
-			return (ft_free_strptr(final), NULL);
-		command += i;
+		j = 0;
+		if ((command[j] == '\'' || command[j] == '\"') && is_quote(command, j))
+			j += locate_quote(command, j);
+		while (command[j] && command[j] != 32)
+			j++;
+		array[i] = ft_substr(command, 0, j);
+		if (!array[i])
+		{
+			ft_free_strptr(array);
+			return (NULL);
+		}
+		command += j;
+		i++;
 	}
-	return (final[counter] = NULL, final);
+	array[i] = NULL;
+	return (array);
 }
 
 char	**split_command(char *command)
@@ -91,9 +99,15 @@ char	**split_command(char *command)
 	int		i;
 	int		words;
 	char	**array;
+	char	*trimmed_command;
 
 	if (!command)
 		return (NULL);
+	trimmed_command = ft_strtrim(command, " ");
+	if (!trimmed_command)
+		exit(1);
+	if (!*trimmed_command)
+		handle_empty_command(trimmed_command, command);
 	words = count_words(command);
 	array = (char **)malloc(sizeof(char *) * (words + 1));
 	if (!array)
@@ -102,8 +116,7 @@ char	**split_command(char *command)
 	i = -1;
 	while (array[++i])
 	{
-		if ((array[i][0] == '\'' || array[i][0] == '\"')
-			&& verify_quote(array[i], 0))
+		if ((*array[i] == '\'' || *array[i] == '\"') && is_quote(array[i], 0))
 			array[i] = ft_substr(array[i], 1, ft_strlen(array[i]) - 2);
 	}
 	return (array);

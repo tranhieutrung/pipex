@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/07/12 21:29:16 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/13 22:10:23 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ MYLIB_DIR	 	= ./mylib
 
 # Source files by directory
 MAN_FILES 		= 	main.c					execute_pipex.c 	\
-					find_command_path.c		spit_command.c
+					find_command_path.c		spit_command.c		utils.c
 
 BONUS_FILES 	= 	main_bonus.c
 	

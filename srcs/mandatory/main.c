@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:18:34 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/12 21:18:36 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/13 22:36:34 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ int	main(int argc, char **argv, char **envp)
 	pipex.argc = argc;
 	pipex.argv = argv;
 	pipex.envp = envp;
+	pipex.error = 0;
 	if (pipe(pipex.pipe) == -1)
 	{
 		perror("pipex: pipe\n");
 		exit (1);
 	}
 	execute_pipex(&pipex);
-	return (0);
+	exit ((pipex.error >> 8) & 255);
 }
