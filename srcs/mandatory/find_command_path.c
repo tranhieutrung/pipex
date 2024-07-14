@@ -6,38 +6,22 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 10:56:27 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/14 15:15:57 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	is_valid_path(char **command)
-{
-	if (ft_strchr(*command, '/'))
-	{
-		if (access(*command, F_OK) == 0)
-			return (1);
-		else
-			handle_error("command not found", 127, NULL);
-	}
-	return (0);
-}
-
-static char	**find_envp_path(char **envp, char **command)
+static char	**find_envp_path(char **envp)
 {
 	int		i;
-	char	**envp_paths;
 
 	i = 0;
 	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
-		handle_error("no such file or directory", 127, command);
-	envp_paths = ft_split(envp[i] + 5, ':');
-	if (!envp_paths)
 		return (NULL);
-	return (envp_paths);
+	return (ft_split(envp[i] + 5, ':'));
 }
 
 static char	*join_command_path(char *envp_path, char *command)
@@ -50,8 +34,6 @@ static char	*join_command_path(char *envp_path, char *command)
 		return (NULL);
 	command_path = ft_strjoin(command_dir, command);
 	free(command_dir);
-	if (!command_path)
-		return (NULL);
 	return (command_path);
 }
 
@@ -64,30 +46,30 @@ static char	*get_command_path(char **envp_paths, char *command)
 	while (envp_paths[i])
 	{
 		command_path = join_command_path(envp_paths[i], command);
-		if (!command_path)
-			return (NULL);
-		if (access(command_path, F_OK) == 0)
+		if (!command_path || access(command_path, F_OK) == 0)
 			return (command_path);
 		free(command_path);
 		i++;
 	}
-	// ft_printf_fd(2, "pipex: %s: command not found\n", command);
 	return (NULL);
 }
 
-char	*find_command_path(t_pipex *pipex, char **command)
+char	*find_command_path(char **envp, char **splitted_command)
 {
 	char	**envp_paths;
 	char	*command_path;
 
-	if (is_valid_path(command))
-		return (ft_strdup(*command));
-	envp_paths = find_envp_path(pipex->envp, command);
+	if (ft_strchr(*splitted_command, '/'))
+	{
+		if (access(*splitted_command, F_OK) == 0)
+			return (ft_strdup(*splitted_command));
+		else
+			return (NULL);
+	}
+	envp_paths = find_envp_path(envp);
 	if (!envp_paths)
 		return (NULL);
-	command_path = get_command_path(envp_paths, *command);
+	command_path = get_command_path(envp_paths, *splitted_command);
 	ft_free_strptr(envp_paths);
-	if (!command_path)
-		return (NULL);
 	return (command_path);
 }
