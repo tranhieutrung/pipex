@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 15:15:57 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/14 15:41:48 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ char	*find_command_path(char **envp, char **splitted_command)
 	if (!envp_paths)
 		return (NULL);
 	command_path = get_command_path(envp_paths, *splitted_command);
-	ft_free_strptr(envp_paths);
+	ft_free_triptr(&envp_paths);
 	return (command_path);
 }
