@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 23:44:42 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/14 10:56:27 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,7 @@ static int	is_valid_path(char **command)
 		if (access(*command, F_OK) == 0)
 			return (1);
 		else
-		{
-			ft_printf_fd(2,"pipex: %s: No such file or directory\n", *command);
-			ft_free_strptr(command);
-			exit(127);
-		}
+			handle_error("command not found", 127, NULL);
 	}
 	return (0);
 }
@@ -37,11 +33,7 @@ static char	**find_envp_path(char **envp, char **command)
 	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
-	{
-		ft_printf_fd(2,"pipex: %s: No such file or directory\n", command);
-		ft_free_strptr(command);
-		exit(127);
-	}
+		handle_error("no such file or directory", 127, command);
 	envp_paths = ft_split(envp[i] + 5, ':');
 	if (!envp_paths)
 		return (NULL);
@@ -73,21 +65,13 @@ static char	*get_command_path(char **envp_paths, char *command)
 	{
 		command_path = join_command_path(envp_paths[i], command);
 		if (!command_path)
-		{
-			ft_free_strptr(envp_paths);
 			return (NULL);
-		}
 		if (access(command_path, F_OK) == 0)
-		{
-			ft_free_strptr(envp_paths);
 			return (command_path);
-		}
 		free(command_path);
-		ft_printf_fd(2, "i = %d\n", i);
 		i++;
 	}
-	ft_free_strptr(envp_paths);
-	ft_printf_fd(2, "pipex: %s: command not found\n", command);
+	// ft_printf_fd(2, "pipex: %s: command not found\n", command);
 	return (NULL);
 }
 
@@ -97,15 +81,12 @@ char	*find_command_path(t_pipex *pipex, char **command)
 	char	*command_path;
 
 	if (is_valid_path(command))
-		return (*command);
+		return (ft_strdup(*command));
 	envp_paths = find_envp_path(pipex->envp, command);
 	if (!envp_paths)
 		return (NULL);
-	int i =0;
-	while (envp_paths[i]){
-		ft_printf_fd(1, "envp[%d] = %s\n", i, envp_paths[i]);
-		i++;}
 	command_path = get_command_path(envp_paths, *command);
+	ft_free_strptr(envp_paths);
 	if (!command_path)
 		return (NULL);
 	return (command_path);

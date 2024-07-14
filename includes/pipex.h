@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 22:59:33 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/14 10:32:34 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,12 @@ typedef struct s_pipex
 void	execute_pipex(t_pipex *pipex);
 char	*find_command_path(t_pipex *pipex, char **commands);
 char	**split_command(char *command);
-void	handle_error_126(char *command, char **splitted_command);
-void	handle_error_127(char *command, char **splitted_command);
-void	handle_error_exec(char *command_path, char **splitted_command);
+
+void	print_and_exit(char *message, int error_number);
+void	handle_error(char *message, int error_number, char **command);
+void	handle_exec_error(char *command_path, char **splitted_command);
 void	handle_empty_command(char *trimmed_command, char *command);
+void 	handle_open_error(char *name, int pipe_num);
+void 	handle_fork_error(int fd1, int fd2);
 
 #endif
