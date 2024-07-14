@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 11:11:39 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/14 14:55:27 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_error(char *message, int error_number, char **command)
 	else
 	{
 		ft_printf_fd(2, "pipex: %s: %s\n", *command, message);
-		ft_free_strptr(command);
+		ft_free_triptr(&command);
 	}
 	exit(error_number);
 }
@@ -35,10 +35,10 @@ void	handle_exec_error(char *command_path, char **splitted_command)
 	// 	else
 	// 		handle_error("command not found", 127, splitted_command);
 	// }
-	ft_printf_fd(2, "pipex: %s: %s\n", command_path, strerror(errno));
+	ft_printf_fd(2, "pipex: %s: %s\n", *splitted_command, strerror(errno));
 	if (command_path)
 		free(command_path);
-	ft_free_strptr(splitted_command);
+	ft_free_triptr(&splitted_command);
 	exit(126);
 }
 
@@ -63,3 +63,5 @@ void handle_fork_error(int fd1, int fd2)
 	perror("pipex: fork\n");
 	exit (1);
 }
+
+// k su dung pipex

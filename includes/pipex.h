@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 10:32:34 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/14 14:25:50 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ typedef struct s_pipex
 	char	**envp;
 	int		pipe[2];
 	int		fd[2];
-	pid_t	pid;
 	int		error;
 }	t_pipex;
 
 void	execute_pipex(t_pipex *pipex);
-char	*find_command_path(t_pipex *pipex, char **commands);
+char	*find_command_path(char **envp, char **command);
 char	**split_command(char *command);
 
 void	print_and_exit(char *message, int error_number);
@@ -43,3 +42,14 @@ void 	handle_open_error(char *name, int pipe_num);
 void 	handle_fork_error(int fd1, int fd2);
 
 #endif
+
+/*
+//free::
+command_dir
+command_path
+envp_paths
+command /splitted_command
+command_path
+splitted_command
+trimmed_command
+*/

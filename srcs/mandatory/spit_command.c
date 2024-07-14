@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:24 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/13 23:14:40 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/14 14:55:22 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	**split_word(char *command, char **array, int words)
 		array[i] = ft_substr(command, 0, j);
 		if (!array[i])
 		{
-			ft_free_strptr(array);
+			ft_free_triptr(&array);
 			return (NULL);
 		}
 		command += j;
@@ -115,10 +115,12 @@ char	**split_command(char *command)
 	array = split_word(trimmed_command, array, words);
 	free (trimmed_command);
 	i = -1;
-	while (array[++i])
+	while (array && array[++i])
 	{
 		if ((*array[i] == '\'' || *array[i] == '\"') && is_quote(array[i], 0))
 			array[i] = ft_substr(array[i], 1, ft_strlen(array[i]) - 2);
 	}
 	return (array);
 }
+
+// #k su dung pipex
