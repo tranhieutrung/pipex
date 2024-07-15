@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 15:40:07 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/15 23:30:34 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	handle_error(char *message, int error_number, char **command)
 		ft_printf_fd(2, "pipex: %s: %s\n", *command, message);
 		ft_free_triptr(&command);
 	}
-	ft_printf_fd(1, "errno = %d\n", error_number);
 	exit(error_number);
 }
 
@@ -64,5 +63,3 @@ void handle_fork_error(int fd1, int fd2)
 	perror("pipex: fork\n");
 	exit (1);
 }
-
-// k su dung pipex

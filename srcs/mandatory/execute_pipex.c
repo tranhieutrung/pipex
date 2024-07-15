@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:15:00 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 15:33:17 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/15 23:31:58 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static void	excecute_command(t_pipex *pipex, char *command)
 	char	**splitted_command;
 	char	*command_path;
 
-	splitted_command = split_command(command);
+	splitted_command = split_command(command);//, ' ');
 	if (!splitted_command)
 		handle_error("split command failed", 1, NULL);
 	command_path = find_command_path(pipex->envp, splitted_command);
 	if (!command_path)
 		handle_error("command not found", 127, splitted_command);
-	execve(command_path, splitted_command, pipex->envp); //neu chuong trinh thanh cong, k can free
+	execve(command_path, splitted_command, pipex->envp);
 	handle_exec_error(command_path, splitted_command);
 }
 
@@ -50,7 +50,7 @@ static void	execute_parent_process(t_pipex *pipex)
 	
 	pid = fork();
 	if (pid == -1)
-		handle_fork_error(pipex->pipe[0], pipex->fd[1]);// con phai free truoc do
+		handle_fork_error(pipex->pipe[0], pipex->fd[1]);
 	else if (pid == 0)
 	{
 		pipex->fd[1] = open(pipex->argv[pipex->argc - 1],
@@ -75,12 +75,13 @@ void	execute_pipex(t_pipex *pipex)
 	{
 		close(pipex->pipe[0]);
 		execute_child_process(pipex);
+		close(pipex->pipe[1]);
 	}
 	else
 	{
 		close(pipex->pipe[1]);
 		execute_parent_process(pipex);
 		close(pipex->pipe[0]);
-		waitpid(pid, &pipex->error, 0);
+		waitpid(pid, NULL, 0);
 	}
 }

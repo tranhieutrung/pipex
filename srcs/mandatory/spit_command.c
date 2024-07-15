@@ -6,11 +6,236 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:24 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 14:55:22 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/15 23:31:47 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+/*
+void	ft_free_set_null(char **str)
+{
+	free(*str);
+	*str = NULL;
+}
+
+void	ft_multiple_free_set_null(char ***str)
+{
+	int	i;
+
+	i = 0;
+	if (*str)
+	{
+		while ((*str)[i] != NULL)
+		{
+			free((*str)[i]);
+			i++;
+		}
+		free(*str);
+		*str = NULL;
+	}
+}
+
+char	*ft_return_multiple_free_set_null(char ***str)
+{
+	int	i;
+
+	i = 0;
+	if (*str)
+	{
+		while ((*str)[i] != NULL)
+		{
+			free((*str)[i]);
+			i++;
+		}
+		free(*str);
+		*str = NULL;
+	}
+	return (NULL);
+}
+
+void	ft_split_skip_delimiter(char const **s, char delimiter)
+{
+	while (**s && **s == delimiter)
+		(*s)++;
+}
+
+const char	*ft_skip_quote(const char **s)
+{
+	char	quote;
+
+	quote = **s;
+	(*s)++;
+	while (**s)
+	{
+		if (**s == quote)
+		{
+			(*s)++;
+			return (*s);
+		}
+		else if (**s == '\\' && *(*s + 1))
+		{
+			(*s) += 2;
+		}
+		else
+			(*s)++;
+	}
+	return (NULL);
+}
+
+void	*ft_memcpy_esc(void	*dst, void const *src, size_t n)
+{
+	void	*return_dst;
+
+	return_dst = dst;
+	if (!dst && !src)
+		return (dst);
+	while (n--)
+	{
+		if (*(char *)src == '\\')
+			src++;
+		*(char *)dst++ = *(char *)src++;
+	}
+	return (return_dst);
+}
+
+static size_t	ft_wordcount(const char *s, char delimiter)
+{
+	size_t	count;
+
+	count = 0;
+	while (*s)
+	{
+		ft_split_skip_delimiter(&s, delimiter);
+		if (*s)
+		{
+			count++;
+			if (*s == '\'' || *s == '\"')
+			{
+				if (ft_skip_quote(&s) == NULL)
+					break ;
+			}
+			else
+			{
+				while (*s && *s != delimiter && *s != '\'' && *s != '\"')
+					s++;
+			}
+		}
+	}
+	return (count);
+}
+
+static void	ft_cal_word_quote(
+	const char **s,
+	const char **start,
+	size_t *current_word_len,
+	char quote
+)
+{
+	int	esc_count;
+
+	esc_count = 0;
+	if (**s == '\'' || **s == '\"')
+	{
+		(*s)++;
+		*start = *s;
+		while (**s)
+		{
+			if (**s == '\\' && *(*s + 1))
+			{
+				esc_count++;
+				(*s) += 2;
+			}
+			else if (**s == quote)
+			{
+				*current_word_len = *s - *start - esc_count;
+				(*s)++;
+				return ;
+			}
+			else
+				(*s)++;
+		}
+	}
+}
+
+static void	ft_cal_word_alloc(
+	const char **s,
+	const char **start,
+	char delimiter,
+	size_t *current_word_len)
+{
+	*start = *s;
+	*current_word_len = 0;
+	if (**s == '\'' || **s == '\"')
+	{
+		ft_cal_word_quote(s, start, current_word_len, **s);
+	}
+	else
+	{
+		while (**s && **s != delimiter)
+			(*s)++;
+		*current_word_len = *s - *start;
+	}
+}
+
+static char	**ft_split_helper(
+	char **res,
+	const char *s,
+	char delimiter,
+	size_t i
+)
+{
+	size_t		current_word_len;
+	const char	*start;
+
+	while (*s)
+	{
+		ft_split_skip_delimiter(&s, delimiter);
+		if (*s)
+		{
+			ft_cal_word_alloc(&s, &start, delimiter, &current_word_len);
+			res[i] = (char *)malloc((current_word_len + 1) * sizeof(char));
+			if (!res[i])
+			{
+				ft_multiple_free_set_null(&res);
+				return (NULL);
+			}
+			ft_memcpy_esc(res[i], start, current_word_len);
+			res[i][current_word_len] = '\0';
+			i++;
+		}
+	}
+	res[i] = NULL;
+	return (res);
+}
+static inline void	ft_empty_cmd(char *trimmed_cmd, char *org_cmd)
+{
+	if (trimmed_cmd[0] == ' ' || !trimmed_cmd[0])
+		ft_printf_fd(2, "%s: %s: command not found\n", "pipex", org_cmd);
+	free(trimmed_cmd);
+	exit (127);
+}
+
+char	**split_command(char *cmd, char delimiter)
+{
+	char	**res;
+	size_t	size;
+	char	*trimmed_cmd;
+
+	trimmed_cmd = ft_strtrim(cmd, " ");
+	if (!trimmed_cmd)
+		exit(1);
+	if (!*trimmed_cmd)
+		ft_empty_cmd(trimmed_cmd, cmd);
+	size = ft_wordcount(trimmed_cmd, delimiter);
+	res = (char **)malloc((size + 1) * sizeof(char *));
+	if (!res)
+	{
+		return (NULL);
+	}
+	res = ft_split_helper(res, trimmed_cmd, delimiter, 0);
+	free(trimmed_cmd);
+	return (res);
+}*/
 
 static int	locate_quote(char *command, int i)
 {
