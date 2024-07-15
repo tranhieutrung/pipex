@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/14 15:41:48 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/15 09:49:06 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 
 static char	**find_envp_path(char **envp)
 {
-	int		i;
-
-	i = 0;
-	while (envp[i] && !ft_strnstr(envp[i], "PATH=", 5))
-		i++;
-	if (!envp[i])
+	while (*envp && !ft_strnstr(*envp, "PATH=", 5))
+		envp++;
+	if (!*envp)
 		return (NULL);
-	return (ft_split(envp[i] + 5, ':'));
+	return (ft_split(*envp + 5, ':'));
 }
 
 static char	*join_command_path(char *envp_path, char *command)
@@ -40,16 +37,13 @@ static char	*join_command_path(char *envp_path, char *command)
 static char	*get_command_path(char **envp_paths, char *command)
 {
 	char	*command_path;
-	int		i;
 
-	i = 0;
-	while (envp_paths[i])
+	while (*envp_paths)
 	{
-		command_path = join_command_path(envp_paths[i], command);
+		command_path = join_command_path(*(envp_paths++), command);
 		if (!command_path || access(command_path, F_OK) == 0)
 			return (command_path);
 		free(command_path);
-		i++;
 	}
 	return (NULL);
 }
