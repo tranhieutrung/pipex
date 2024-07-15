@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/07/13 22:10:23 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/15 23:27:44 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,10 @@ all: $(NAME)
 $(NAME): $(MYLIB) $(MAN_SRCS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(MAN_SRCS) $(MYLIB) -o $(NAME)
 
-bonus: .bonus
-.bonus: $(MYLIB) $(BN_SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(BN_SRCS) $(MYLIB) -o $(NAME)
-	@touch .bonus
+# bonus: .bonus
+# .bonus: $(MYLIB) $(BN_SRCS)
+# 	$(CC) $(CFLAGS) $(INCLUDES) $(BN_SRCS) $(MYLIB) -o $(NAME)
+# 	@touch .bonus
 
 $(MYLIB):
 	$(MAKE) -C $(MYLIB_DIR)
