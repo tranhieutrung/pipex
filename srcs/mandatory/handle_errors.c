@@ -6,23 +6,11 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/29 10:10:44 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/29 14:48:36 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	handle_error(char *message, int error_number, char **command)
-{
-	if(!command)
-		ft_printf_fd(2, "pipex: %s\n", message);
-	else
-	{
-		ft_printf_fd(2, "pipex: %s: %s\n", *command, message);
-		ft_free_triptr(&command);
-	}
-	exit(error_number);
-}
 
 void	handle_exec_error(char *command_path, char **splitted_command)
 {
