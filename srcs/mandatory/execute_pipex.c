@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:15:00 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/29 14:49:45 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/30 22:37:46 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,34 @@ static void	excecute_command(t_pipex *pipex, char *command)
 	handle_exec_error(command_path, splitted_command);
 }
 
-static void	execute_child_process(t_pipex *pipex)
+static void	execute_child_process(t_pipex *pipex, int *pipe_id)
 {
-	pipex->fd[0] = open(pipex->argv[1], O_RDONLY);
-	if (pipex->fd[0] == -1)
-		handle_open_error(pipex->argv[1], pipex->pipe[1]);
-	redirect_fds(pipex->fd[0], 0, pipex->pipe[1], 1);
+	int in_fd;
+
+	close(pipe_id[0]);
+	in_fd = open(pipex->argv[1], O_RDONLY);
+	if (in_fd == -1)
+		handle_open_error(pipex->argv[1], pipe_id[1]);
+	redirect_fds(in_fd, 0, pipe_id[1], 1);
 	excecute_command(pipex, pipex->argv[2]);
 }
 
-static void	execute_parent_process(t_pipex *pipex)
+static void	execute_parent_process(t_pipex *pipex, int *pipe_id)
 {
 	pid_t	pid;
+	int		out_fd;
 	
 	pid = fork();
 	if (pid == -1)
-		handle_fork_error(pipex->pipe[0], pipex->fd[1]);
+		handle_fork_error(pipe_id[0], pipe_id[1]);
 	else if (pid == 0)
 	{
-		pipex->fd[1] = open(pipex->argv[pipex->argc - 1],
-				O_CREAT | O_RDWR | O_TRUNC, 00700);
-		if (pipex->fd[1] == -1)
-			handle_open_error(pipex->argv[pipex->argc - 1], pipex->pipe[0]);
-		redirect_fds(pipex->pipe[0], 0, pipex->fd[1], 1);
-		excecute_command(pipex, pipex->argv[3]);
+		out_fd = open(pipex->argv[pipex->argc - 1],
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (out_fd == -1)
+			handle_open_error(pipex->argv[pipex->argc - 1], pipe_id[0]);
+		redirect_fds(pipe_id[0], 0, out_fd, 1);
+		excecute_command(pipex, pipex->argv[pipex->argc - 2]);
 	}
 	else
 		waitpid(pid, &pipex->error, 0);
@@ -74,26 +78,23 @@ static void	execute_parent_process(t_pipex *pipex)
 void	execute_pipex(t_pipex *pipex)
 {
 	pid_t	pid;
+	int		pipe_id[2];
 
-	if (pipe(pipex->pipe) == -1)
+	if (pipe(pipe_id) == -1)
 	{
 		perror("pipex: pipe\n");
 		exit (1);
 	}
 	pid = fork();
 	if (pid == -1)
-		handle_fork_error(pipex->pipe[0], pipex->pipe[1]);
+		handle_fork_error(pipe_id[0], pipe_id[1]);
 	else if (pid == 0)
-	{
-		close(pipex->pipe[0]);
-		execute_child_process(pipex);
-		close(pipex->pipe[1]);
-	}
+		execute_child_process(pipex, pipe_id);
 	else
 	{
-		close(pipex->pipe[1]);
-		execute_parent_process(pipex);
-		close(pipex->pipe[0]);
+		close(pipe_id[1]);
+		execute_parent_process(pipex, pipe_id);
+		close(pipe_id[0]);
 		waitpid(pid, NULL, 0);
 	}
 }

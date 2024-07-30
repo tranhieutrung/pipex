@@ -6,18 +6,26 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:15:00 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/29 14:46:45 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/30 23:08:23 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 static void	redirect_fds(int from_fd1, int to_fd1, int from_fd2, int to_fd2)
 {
-	dup2(from_fd1, to_fd1);
-	close(from_fd1);
-	dup2(from_fd2, to_fd2);
-	close(from_fd2);
+    if (dup2(from_fd1, to_fd1) == -1)
+    {
+        perror("pipex: dup2");
+        exit(1);
+    }
+    close(from_fd1);
+    if (dup2(from_fd2, to_fd2) == -1)
+    {
+        perror("pipex: dup2");
+        exit(1);
+    }
+    close(from_fd2);
 }
 
 static void	excecute_command(t_pipex *pipex, char *command)
@@ -42,70 +50,57 @@ static void	excecute_command(t_pipex *pipex, char *command)
 	handle_exec_error(command_path, splitted_command);
 }
 
-void	handle_error(char *message, int error_number, char **command)
+static void	execute_child_process(t_pipex *pipex, int *pipe_id, int cmd_index)
 {
-	if(!command)
-		ft_printf_fd(2, "pipex: %s\n", message);
-	else
+	int in_fd;
+
+	if (cmd_index == 2 && ft_strcmp(pipex->argv[1], "here_doc") == 0)
 	{
-		ft_printf_fd(2, "pipex: %s: %s\n", *command, message);
-		ft_free_triptr(&command);
+		close(pipe_id[0]);
+		read_here_doc(pipex, pipe_id);
+		dup2(pipe_id[1], 1);
+		close(pipe_id[1]);
+		cmd_index++;
 	}
-	exit(error_number);
-}
-
-static void	execute_first_commands(t_pipex *pipex, int *pipe_id)
-{
-	int command_index;
-
-	command_index = 2;
-	if (command_index < pipex->argc - 2)
-		execute_next_command(pipex, pipe_id, command_index);
-	pipex->fd[0] = open(pipex->argv[1], O_RDONLY);
-	if (pipex->fd[0] == -1)
-		handle_open_error(pipex->argv[1], pipe_id[1]);
-	redirect_fds(pipex->fd[0], 0, pipe_id[1], 1);
-	excecute_command(pipex, pipex->argv[2]);
-	command_index = 3;
-
-}
-
-static void	execute_first_commands(t_pipex *pipex, int *pipe_id, int cmd_index)
-{
-	cmd_index++;
-	if (cmd_index == 2)
+	else if (cmd_index == 2)
 	{
-		pipex->fd[0] = open(pipex->argv[1], O_RDONLY);
-		if (pipex->fd[0] == -1)
+		close(pipe_id[0]);
+		in_fd = open(pipex->argv[1], O_RDONLY);
+		if (in_fd == -1)
 			handle_open_error(pipex->argv[1], pipe_id[1]);
-		redirect_fds(pipex->fd[0], 0, pipe_id[1], 1);
-		excecute_command(pipex, pipex->argv[2]);
+		redirect_fds(in_fd, 0, pipe_id[1], 1);
 	}
-	else if (cmd_index < pipex->argc - 2)
-		execute_next_command(pipex, pipe_id, cmd_index);
+	else
+		redirect_fds(pipe_id[0], 0, pipe_id[1], 1);
+	excecute_command(pipex, pipex->argv[cmd_index]);
 }
 
-static void	execute_last_command(t_pipex *pipex, int *pipe_id)
+static void	execute_parent_process(t_pipex *pipex, int *pipe_id)
 {
 	pid_t	pid;
+	int		out_fd;
 	
 	pid = fork();
 	if (pid == -1)
-		handle_fork_error(pipe_id[0], pipex->fd[1]);
+		handle_fork_error(pipe_id[0], pipe_id[1]);
 	else if (pid == 0)
 	{
-		pipex->fd[1] = open(pipex->argv[pipex->argc - 1],
-				O_CREAT | O_RDWR | O_TRUNC, 00700);
-		if (pipex->fd[1] == -1)
+		// close(pipe_id[1]);
+		out_fd = open(pipex->argv[pipex->argc - 1],
+				O_CREAT | O_RDWR | O_TRUNC, 00644);
+		if (out_fd == -1)
 			handle_open_error(pipex->argv[pipex->argc - 1], pipe_id[0]);
-		redirect_fds(pipe_id[0], 0, pipex->fd[1], 1);
-		excecute_command(pipex, pipex->argv[3]);
+		redirect_fds(pipe_id[0], 0, out_fd, 1);
+		excecute_command(pipex, pipex->argv[pipex->argc - 2]);
 	}
 	else
+	{
+		close(pipe_id[0]);
 		waitpid(pid, &pipex->error, 0);
+	}
 }
 
-void	execute_pipex(t_pipex *pipex)
+void	execute_pipex(t_pipex *pipex, int cmd_index)
 {
 	pid_t	pid;
 	int		pipe_id[2];
@@ -119,15 +114,14 @@ void	execute_pipex(t_pipex *pipex)
 	if (pid == -1)
 		handle_fork_error(pipe_id[0], pipe_id[1]);
 	else if (pid == 0)
-	{
-		close(pipe_id[0]);
-		execute_first_commands(pipex, pipe_id, 1);
-		close(pipe_id[1]);
-	}
+		execute_child_process(pipex, pipe_id, cmd_index);
 	else
 	{
 		close(pipe_id[1]);
-		execute_last_command(pipex, pipe_id);
+		if (cmd_index < pipex->argc - 3)
+			execute_pipex(pipex, cmd_index + 1);
+		else
+			execute_parent_process(pipex, pipe_id);
 		close(pipe_id[0]);
 		waitpid(pid, NULL, 0);
 	}
