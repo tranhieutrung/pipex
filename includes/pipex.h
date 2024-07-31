@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/30 22:06:55 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/31 13:30:33 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	execute_pipex(t_pipex *pipex);
 char	*find_command_path(char **envp, char **command);
 char	**split_command(char *command);
 
-void	print_and_exit(char *message, int error_number);
-void	handle_error(char *message, int error_number, char **command);
 void	handle_exec_error(char *command_path, char **splitted_command);
 void	handle_empty_command(char *trimmed_command, char *command);
 void 	handle_open_error(char *name, int pipe_num);

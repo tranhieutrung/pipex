@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/07/30 21:54:01 by hitran           ###   ########.fr        #
+#    Updated: 2024/07/31 23:46:58 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,16 +39,20 @@ MYLIB 			= $(MYLIB_DIR)/mylib.a
 NAME 			= pipex
 
 # Targets
-all: $(NAME)
+all : mandatory
 
-$(NAME): $(MYLIB) $(MAN_SRCS)
+mandatory : .mandatory
+.mandatory: $(MYLIB) $(MAN_SRCS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(MAN_SRCS) $(MYLIB) -o $(NAME)
+	@touch .mandatory
+	@rm -f .bonus
 
 bonus: .bonus
 .bonus: $(MYLIB) $(BONUS_SRCS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(BONUS_SRCS) $(MYLIB) -o $(NAME)
 	@touch .bonus
-
+	@rm -f .mandatory
+	
 $(MYLIB):
 	$(MAKE) -C $(MYLIB_DIR)
 
@@ -58,8 +62,8 @@ clean:
 
 fclean: clean
 	$(MAKE) fclean -C $(MYLIB_DIR)
-	$(RM) $(NAME) $(BONUS) .bonus
+	$(RM) $(NAME) .bonus .mandatory
 	
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re mandatory bonus

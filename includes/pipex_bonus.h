@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/30 21:46:58 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/31 22:02:25 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,21 @@
 # include <errno.h>
 # include <string.h>
 
+# define BUFFER_SIZE 10000
+
 typedef struct s_pipex
 {
 	int		argc;
 	char	**argv;
 	char	**envp;
+	int		pipe_id[2];
+	int		fd[2];
+	pid_t	pid;
 	int		error;
 }	t_pipex;
 
 void	read_here_doc(t_pipex *pipex, int *pipe_id);
-void	execute_pipex(t_pipex *pipex, int cmd_index);
+void	execute_pipex(t_pipex *pipex);//, int cmd_index);
 char	*find_command_path(char **envp, char **command);
 char	**split_command(char *command);
 void	print_and_exit(char *message, int error_number);
@@ -37,6 +42,6 @@ void	handle_error(char *message, int error_number, char **command);
 void	handle_exec_error(char *command_path, char **splitted_command);
 void	handle_empty_command(char *trimmed_command, char *command);
 void 	handle_open_error(char *name, int pipe_num);
-void 	handle_fork_error(int fd1, int fd2);
-
+void 	handle_fork_error(int *fd);
+void	handle_read_error(int *fd);
 #endif

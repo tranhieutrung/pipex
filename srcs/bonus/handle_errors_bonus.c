@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/30 21:55:44 by hitran           ###   ########.fr       */
+/*   Updated: 2024/07/31 22:02:52 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,25 @@ void	handle_empty_command(char *trimmed_command, char *command)
 	exit (127);
 }
 
-void handle_open_error(char *name, int pipe_num)
+void	handle_open_error(char *name, int pipe_num)
 {
 	ft_printf_fd(2, "pipex: %s: %s\n", name, strerror(errno));
 	close(pipe_num);
 	exit(1);
 }
 
-void handle_fork_error(int fd1, int fd2)
+void	handle_fork_error(int *fd)
 {
-	close(fd1);
-	close(fd2);
+	close(fd[0]);
+	close(fd[1]);
 	perror("pipex: fork\n");
+	exit (1);
+}
+
+void	handle_read_error(int *fd)
+{
+	close(fd[0]);
+	close(fd[1]);
+	perror("pipex: read\n");
 	exit (1);
 }
