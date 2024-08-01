@@ -1,0 +1,5 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+hitran      4428  0.0  0.0      0     0 ?        Z    14:04   0:00 [zypak-sandbox] <defunct>
+hitran      4450  0.0  0.0      0     0 ?        Z    14:04   0:00 [zypak-sandbox] <defunct>
+hitran      4471  0.0  0.0      0     0 ?        Z    14:04   0:00 [zypak-sandbox] <defunct>
+hitran     42170  0.1  0.0      0     0 pts/0    Z    15:46   0:02 [memcheck-amd64-] <defunct>

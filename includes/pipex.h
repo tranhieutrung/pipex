@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/31 13:30:33 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:11:47 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,8 @@ void	handle_exec_error(char *command_path, char **splitted_command);
 void	handle_empty_command(char *trimmed_command, char *command);
 void 	handle_open_error(char *name, int pipe_num);
 void 	handle_fork_error(int fd1, int fd2);
+
+void	create_pipe(int *pipe_id);
+void	redirect_fds(int from_fd1, int to_fd1, int from_fd2, int to_fd2);
 
 #endif

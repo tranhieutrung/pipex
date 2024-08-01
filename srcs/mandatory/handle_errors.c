@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/29 14:48:36 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:12:59 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,28 @@
 
 void	handle_exec_error(char *command_path, char **splitted_command)
 {
+	// if (!access(splitted_command[0], F_OK) && !access(splitted_command[0], X_OK))
+	// {
+	// 	if (command_path)
+	// 		free(command_path);
+	// 	if (ft_strchr(splitted_command[0], '/'))
+	// 	{
+	// 		ft_printf_fd(2, "%s: %s: Is a directory\n", "pipex", splitted_command[0]);
+	// 		ft_free_triptr(&splitted_command);
+	// 		exit (126);
+	// 	}
+	// 	else
+	// 	{
+	// 		ft_printf_fd(2, "%s: %s: command not found\n", "pipex", splitted_command[0]);
+	// 		ft_free_triptr(&splitted_command);
+	// 		exit (127);
+	// 	}
+	// }
 	ft_printf_fd(2, "pipex: %s: %s\n", *splitted_command, strerror(errno));
 	if (command_path)
 		free(command_path);
-	ft_free_triptr(&splitted_command);
+	if (ft_strchr(splitted_command[0], '/'))
+		ft_free_triptr(&splitted_command);
 	exit(126);
 }
 
