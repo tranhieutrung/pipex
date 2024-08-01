@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:24 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/30 21:55:47 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/01 21:36:26 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static char	**split_word(char *command, char **array, int words)
 
 char	**split_command(char *command)
 {
-	int		i;
+	// int		i;
 	int		words;
 	char	**array;
 	char	*trimmed_command;
@@ -114,11 +114,11 @@ char	**split_command(char *command)
 		return (NULL);
 	array = split_word(trimmed_command, array, words);
 	free (trimmed_command);
-	i = -1;
-	while (array && array[++i])
-	{
-		if ((*array[i] == '\'' || *array[i] == '\"') && is_quote(array[i], 0))
-			array[i] = ft_substr(array[i], 1, ft_strlen(array[i]) - 2);
-	}
+	// i = -1;
+	// while (array && array[++i])
+	// {
+	// 	if ((*array[i] == '\'' || *array[i] == '\"') && is_quote(array[i], 0))
+	// 		array[i] = ft_substr(array[i], 1, ft_strlen(array[i]) - 2);
+	// }
 	return (array);
 }
