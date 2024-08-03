@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/01 11:03:34 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/03 15:15:27 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,27 @@ static char	*get_command_path(char **envp_paths, char *command)
 	return (NULL);
 }
 
-char	*find_command_path(char **envp, char **splitted_command)
+char	*find_command_path(char **envp, char **splitted_cmd)
 {
 	char	**envp_paths;
 	char	*command_path;
 
-	// if (ft_strchr(*splitted_command, '/'))
-	// {
-	// 	if (access(*splitted_command, F_OK) == 0)
-	// 		return (ft_strdup(*splitted_command));
-	// 	else
-	// 		return (NULL);
-	// }
+	if (ft_strchr(*splitted_cmd, '/'))
+	{
+		if (access(*splitted_cmd, F_OK) == 0)
+			return (ft_strdup(*splitted_cmd));
+		else
+		{
+			ft_printf_fd(2, "pipex: %s: no such file or directory\n",
+				*splitted_cmd);
+			ft_free_triptr(&splitted_cmd);
+			exit(127);
+		}
+	}
 	envp_paths = find_envp_path(envp);
 	if (!envp_paths)
 		return (NULL);
-	command_path = get_command_path(envp_paths, *splitted_command);
+	command_path = get_command_path(envp_paths, *splitted_cmd);
 	ft_free_triptr(&envp_paths);
 	return (command_path);
 }

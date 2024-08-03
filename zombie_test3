@@ -1,9 +1,0 @@
-USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-tht        40294  0.0  0.5  87776 44916 ?        S    Jul30   0:00 /usr/bin/valgrind.bin --log-file=/tmp/tmp.qSZZ7CMJYo --leak-check=full --errors-for-leak-kinds=all --error-exitcode=42 ./pipex infiles/basic.txt  cat -e outfiles/outfile
-tht        40679  0.0  0.5  87780 44916 ?        S    Jul30   0:00 /usr/bin/valgrind.bin --log-file=/tmp/tmp.PTbR1GlrZY --leak-check=full --errors-for-leak-kinds=all --error-exitcode=42 ./pipex infiles/basic.txt cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e cat -e outfiles/outfile
-tht       108887  0.0  0.0      0     0 pts/2    Z    Aug01   0:00 [timeout] <defunct>
-tht       114973  0.0  0.0      0     0 pts/2    Z    Aug01   0:00 [timeout] <defunct>
-tht       123082  0.0  0.0      0     0 pts/2    Z    Aug01   0:00 [timeout] <defunct>
-tht       131183  0.0  0.0      0     0 pts/2    Z    Aug01   0:00 [timeout] <defunct>
-tht       131403  0.0  0.0      0     0 pts/2    Z    Aug01   0:00 [timeout] <defunct>
-tht       138336  0.0  0.0      0     0 pts/1    Z+   00:01   0:00 [pipex] <defunct>

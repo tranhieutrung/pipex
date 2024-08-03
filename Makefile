@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/08/01 21:33:17 by hitran           ###   ########.fr        #
+#    Updated: 2024/08/03 23:31:09 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,23 @@ INCLUDES 		= -I./includes -I./mylib/includes
 # Directories
 MAN_DIR 		= ./srcs/mandatory
 BONUS_DIR		= ./srcs/bonus
+COMMON_DIR		= ./srcs/common
 MYLIB_DIR	 	= ./mylib
 
 # Source files by directory
-MAN_FILES 		= 	execute_pipex.c 				handle_errors.c	\
-					find_command_path.c				spit_command.c	\
-					utils.c							execute_command.c
+MAN_FILES 		= 	main.c 						execute_pipex.c 				
+
+COMMON_FILES	=	find_command_path.c			spit_command.c	\
+					utils.c						handle_errors.c
 					
-BONUS_FILES 	= 	execute_pipex_bonus.c 			handle_errors_bonus.c	\
-					find_command_path_bonus.c		spit_command_bonus.c	\
-					read_here_doc_bonus.c		
+BONUS_FILES 	= 	main_bonus.c				execute_pipex_bonus.c 	\
+					read_here_doc_bonus.c
 
-MAN_SRCS		= 	main_pipex.c	$(addprefix $(MAN_DIR)/, $(MAN_FILES))
+MAN_SRCS		= 	$(addprefix $(MAN_DIR)/, $(MAN_FILES)) \
+					$(addprefix $(COMMON_DIR)/, $(COMMON_FILES))
 
-BONUS_SRCS		=	main_bonus.c $(addprefix $(BONUS_DIR)/, $(BONUS_FILES))
+BONUS_SRCS		=	$(addprefix $(BONUS_DIR)/, $(BONUS_FILES)) \
+					$(addprefix $(COMMON_DIR)/, $(COMMON_FILES))
 					
 # Library
 MYLIB 			= $(MYLIB_DIR)/mylib.a
@@ -46,13 +49,13 @@ mandatory : .mandatory
 .mandatory: $(MYLIB) $(MAN_SRCS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(MAN_SRCS) $(MYLIB) -o $(NAME)
 	@touch .mandatory
-# 	@rm -f .bonus
+	@rm -f .bonus
 
-# bonus: .bonus
-# .bonus: $(MYLIB) $(BONUS_SRCS)
-# 	$(CC) $(CFLAGS) $(INCLUDES) $(BONUS_SRCS) $(MYLIB) -o $(NAME)
-# 	@touch .bonus
-# 	@rm -f .mandatory
+bonus: .bonus
+.bonus: $(MYLIB) $(BONUS_SRCS)
+	$(CC) $(CFLAGS) $(INCLUDES) $(BONUS_SRCS) $(MYLIB) -o $(NAME)
+	@touch .bonus
+	@rm -f .mandatory
 	
 $(MYLIB):
 	$(MAKE) -C $(MYLIB_DIR)
