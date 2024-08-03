@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   ft_is_all_white_spaces.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/12 21:18:34 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/31 20:59:58 by hitran           ###   ########.fr       */
+/*   Created: 2024/08/03 22:52:19 by hitran            #+#    #+#             */
+/*   Updated: 2024/08/03 22:52:38 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
-
-int	main(int argc, char **argv, char **envp)
+int	ft_is_all_white_spaces(char *s)
 {
-	t_pipex	pipex;
-
-	if (argc < 5 || (ft_strcmp(argv[1], "here_doc") == 0 && argc < 6))
+	while (*s)
 	{
-		ft_printf_fd(2, "pipex: invalid number of arguments.\n");
-		exit (1);
+		if (*s != 32 && (*s < 9 || *s > 13))
+			return (0);
+		s++;
 	}
-	pipex.argc = argc;
-	pipex.argv = argv;
-	pipex.envp = envp;
-	pipex.error = 0;
-	execute_pipex(&pipex);
-	exit ((pipex.error >> 8) & 255);
+	return (1);
 }

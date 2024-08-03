@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_errors_bonus.c                              :+:      :+:    :+:   */
+/*   handle_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/31 22:02:52 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/03 15:14:55 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
-void	handle_exec_error(char *command_path, char **splitted_command)
+void	handle_exec_error(char *command_path, char **splitted_cmd)
 {
-	ft_printf_fd(2, "pipex: %s: %s\n", *splitted_command, strerror(errno));
+	ft_printf_fd(2, "pipex: %s: %s\n", *splitted_cmd, strerror(errno));
 	if (command_path)
 		free(command_path);
-	ft_free_triptr(&splitted_command);
+	ft_free_triptr(&splitted_cmd);
 	exit(126);
-}
-
-void	handle_empty_command(char *trimmed_command, char *command)
-{
-	ft_printf_fd(2, "pipex: %s: command not found\n", command);
-	free(trimmed_command);
-	exit (127);
 }
 
 void	handle_open_error(char *name, int pipe_num)
 {
-	ft_printf_fd(2, "pipex: %s: %s\n", name, strerror(errno));
+	ft_printf_fd(2, "pipex: \"%s\": %s\n", name, strerror(errno));
 	close(pipe_num);
 	exit(1);
 }

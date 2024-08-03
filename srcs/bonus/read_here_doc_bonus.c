@@ -5,37 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 13:08:57 by hitran            #+#    #+#             */
-/*   Updated: 2024/07/31 22:00:46 by hitran           ###   ########.fr       */
+/*   Created: 2024/08/01 12:56:32 by hitran            #+#    #+#             */
+/*   Updated: 2024/08/03 23:29:28 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "pipex.h"
 
-void	read_here_doc(t_pipex *pipex, int *pipe_id)
+static char	*realloc_buffer(char *buffer, int new_size)
 {
-	int		i;
-	int		ret;
+	char	*new_buffer;
+
+	new_buffer = (char *)ft_calloc(new_size, sizeof(char));
+	if (!new_buffer)
+	{
+		free(buffer);
+		exit(1);
+	}
+	ft_memcpy(new_buffer, buffer, new_size / 2);
+	free(buffer);
+	return (new_buffer);
+}
+
+static char	*read_line_from_stdin(int *pipe_id, int index)
+{
+	int		byte;
+	int		buffer_size;
 	char	c;
 	char	*line;
 
-	i = 0;
-	line = (char *) ft_calloc(BUFFER_SIZE, 1);
+	buffer_size = 1024;
+	line = (char *)ft_calloc(buffer_size, sizeof(char));
 	if (!line)
-		exit (1);
-	ret = read(0, &c, 1);
-	if (ret == -1)
-		handle_read_error(pipe_id);
-	while (ret && c && c != '\n')
+		exit(1);
+	while (1)
 	{
-		line[i++] = c;
-		ret = read(0, &c, 1);
+		byte = read(0, &c, 1);
+		if (byte == -1)
+			handle_read_error(pipe_id);
+		if (byte == 0 || c == '\n')
+			break ;
+		line[index++] = c;
+		if (index >= buffer_size)
+		{
+			buffer_size *= 2;
+			line = realloc_buffer(line, buffer_size);
+		}
 	}
-	if (ft_strcmp(line, pipex->argv[2]))
+	line[index] = '\0';
+	return (line);
+}
+
+void	read_here_doc(t_pipex *pipex, int *pipe_id)
+{
+	char	*line;
+
+	while (1)
 	{
-		ft_printf_fd(pipe_id[1], "%s", line);
-		ft_printf_fd(pipe_id[1], "%c", '\n');
-		read_here_doc(pipex, pipe_id);
+		line = read_line_from_stdin(pipe_id, 0);
+		if (ft_strcmp(line, pipex->argv[2]) == 0)
+		{
+			free(line);
+			break ;
+		}
+		ft_printf_fd(pipe_id[1], "%s\n", line);
+		free(line);
 	}
-	free(line);
 }
