@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/08/03 23:31:09 by hitran           ###   ########.fr        #
+#    Updated: 2024/08/05 13:18:30 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,10 @@ bonus: .bonus
 	$(CC) $(CFLAGS) $(INCLUDES) $(BONUS_SRCS) $(MYLIB) -o $(NAME)
 	@touch .bonus
 	@rm -f .mandatory
-	
+
+test: $(MYLIB)
+	$(CC) $(CFLAGS) $(INCLUDES) ./srcs/common/test_spit_command.c $(MYLIB) -o test
+
 $(MYLIB):
 	$(MAKE) -C $(MYLIB_DIR)
 
@@ -70,4 +73,4 @@ fclean: clean
 	
 re: fclean all
 
-.PHONY: all clean fclean re mandatory bonus
+.PHONY: all clean fclean re mandatory bonus test

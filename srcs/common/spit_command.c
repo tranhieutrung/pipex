@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 22:37:08 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/03 22:56:14 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 14:31:15 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static int	count_words(char *command)
 	i = 0;
 	while (command[i])
 	{
-		if (command[i] == 39)
+		if (command[i] == 39 || command[i] == 34)
 		{
 			words++;
-			i = skip_quotes(command, i);
+			i = skip_quotes(command, i) + 1;
 		}
 		else if (command[i] != 32)
 		{
@@ -50,41 +50,44 @@ static char	*extract_word(char *command, int len)
 	j = 0;
 	while (i < len)
 	{
-		if (command[i] == 39)
+		if ((command[0] == 34 || command[0] == 39) && command[i] == command[0])
 			i++;
-		if (command[0] != 39 && command[i] == 32)
+		else if (command[0] != 39 && command[0] != 34 && command[i] == 32)
 			i++;
-		if (command[0] != 39 && command[i] == '\\' && command[i + 1] != '\0')
-			i++;
-		word[j++] = command[i++];
+		else
+		{
+			if (command[0] != 39 && command[0] != 34 && command[i] == '\\')
+				i++;
+			word[j++] = command[i++];
+		}
 	}
 	word[j] = '\0';
 	return (word);
 }
 
-static char	**split_word(char *command, char **array, int words)
+static char	**split_word(char *command, char **array, int words, int order)
 {
-	int	i;
-	int	j;
+	int		i;
+	char	quote_char;
 
-	j = -1;
-	while (++j < words)
+	while (++order < words)
 	{
 		while (*command == 32)
 			command++;
 		i = 0;
-		if (*command == 39)
-			while (command[++i] != 39)
+		quote_char = *command;
+		if (*command == 39 || *command == 34)
+			while (command[++i] != quote_char)
 				;
 		else
 			i = skip_word(command, 0);
-		array[j] = extract_word(command, i);
-		if (!array[j])
+		array[order] = extract_word(command, i);
+		if (!array[order])
 		{
 			ft_free_triptr(&array);
 			return (NULL);
 		}
-		if (*command == 39)
+		if (*command == 39 || *command == 34)
 			i++;
 		command += i;
 	}
@@ -107,6 +110,6 @@ char	**split_command(char *command)
 	array = (char **)ft_calloc((words + 1), sizeof(char *));
 	if (!array)
 		return (NULL);
-	array = split_word(command, array, words);
+	array = split_word(command, array, words, -1);
 	return (array);
 }
