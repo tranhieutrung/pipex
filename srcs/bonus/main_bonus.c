@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 21:18:34 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/03 00:25:53 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 14:20:52 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf_fd(2, "pipex: invalid number of arguments.\n");
 		exit (1);
 	}
-	check_quote(argc, argv);
 	pipex.argc = argc;
 	pipex.argv = argv;
 	pipex.envp = envp;

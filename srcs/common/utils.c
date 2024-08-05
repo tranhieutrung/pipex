@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:56:32 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/03 22:53:20 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 14:24:02 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,46 +34,27 @@ void	redirect_fds(int from_fd1, int to_fd1, int from_fd2, int to_fd2)
 	close(from_fd2);
 }
 
-void	check_quote(int argc, char **argv)
+int	skip_quotes(char *str, int i)
 {
-	int	i;
-	int	j;
-	int	count;
+	char	quote;
 
-	i = 0;
-	while (++i < argc)
-	{
-		j = 0;
-		count = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] == '\'')
-				count++;
-			j++;
-		}
-		if (count % 2)
-		{
-			ft_printf_fd(2, "pipex: %s: unmatched single quote\n", argv[i]);
-			exit (1);
-		}
-	}
-}
-
-int	skip_quotes(char *command, int i)
-{
+	quote = str[i];
 	i++;
-	while (command[i] && command[i] != 39)
+	while (str[i] && str[i] != quote)
 		i++;
-	if (command[i] == 39)
-		i++;
+	if (str[i] != quote)
+	{
+		ft_printf_fd(2, "pipex: unmatched single quote\n");
+		exit (1);
+	}
 	return (i);
 }
 
-int	skip_word(char *command, int i)
+int	skip_word(char *str, int i)
 {
-	while (command[i] && command[i] != 32 && command[i] != 39)
+	while (str[i] && str[i] != 32 && str[i] != 34 && str[i] != 39)
 	{
-		if (command[i] == '\\' && command[i + 1] != '\0')
+		if (str[i] == '\\' && str[i + 1] != '\0')
 			i += 2;
 		else
 			i++;
