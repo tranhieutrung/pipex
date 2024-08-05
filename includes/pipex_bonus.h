@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 23:23:14 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:22:52 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "mylib.h"
 # include <fcntl.h>
@@ -28,11 +28,14 @@ typedef struct s_pipex
 	int		error;
 	int		fd[2];
 	int		pipe_id[2];
+	int		hd_pipe_id[2];
+	int		next_pipe[2];
 	pid_t	pid;
 }	t_pipex;
 
 //   ALGORITHM    //
 void	execute_pipex(t_pipex *pipex);
+void	read_here_doc(t_pipex *pipex, int *pipe_id);
 char	*find_command_path(char **envp, char **command);
 char	**split_command(char *command);
 

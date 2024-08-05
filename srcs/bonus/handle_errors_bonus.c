@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_errors.c                                    :+:      :+:    :+:   */
+/*   handle_errors_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/03 15:14:55 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	handle_exec_error(char *command_path, char **splitted_cmd)
 {
@@ -23,7 +23,7 @@ void	handle_exec_error(char *command_path, char **splitted_cmd)
 
 void	handle_open_error(char *name, int pipe_num)
 {
-	ft_printf_fd(2, "pipex: \"%s\": %s\n", name, strerror(errno));
+	ft_printf_fd(2, "pipex: %s: %s\n", name, strerror(errno));
 	close(pipe_num);
 	exit(1);
 }

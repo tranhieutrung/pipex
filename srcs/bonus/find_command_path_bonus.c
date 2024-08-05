@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_command_path.c                                :+:      :+:    :+:   */
+/*   find_command_path_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/03 15:15:27 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 static char	**find_envp_path(char **envp)
 {
@@ -59,7 +59,7 @@ char	*find_command_path(char **envp, char **splitted_cmd)
 			return (ft_strdup(*splitted_cmd));
 		else
 		{
-			ft_printf_fd(2, "pipex: %s: no such file or directory\n",
+			ft_printf_fd(2, "pipex: %s: No such file or directory\n",
 				*splitted_cmd);
 			ft_free_triptr(&splitted_cmd);
 			exit(127);

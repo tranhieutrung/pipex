@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   spit_command.c                                     :+:      :+:    :+:   */
+/*   spit_command_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 22:37:08 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 14:31:15 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 static int	count_words(char *command)
 {
@@ -103,7 +103,7 @@ char	**split_command(char *command)
 		return (NULL);
 	if (ft_is_all_white_spaces(command))
 	{
-		ft_printf_fd(2, "pipex: \"%s\": command not found\n", command);
+		ft_printf_fd(2, "pipex: %s: Command not found\n", command);
 		exit (127);
 	}
 	words = count_words(command);
