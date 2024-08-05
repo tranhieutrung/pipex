@@ -6,11 +6,11 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:56:32 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/03 23:29:28 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 static char	*realloc_buffer(char *buffer, int new_size)
 {

@@ -6,11 +6,11 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:06:57 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/03 15:17:44 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	excecute_command(t_pipex *pipex, char *command)
 {
@@ -23,7 +23,7 @@ void	excecute_command(t_pipex *pipex, char *command)
 	command_path = find_command_path(pipex->envp, splitted_cmd);
 	if (!command_path)
 	{
-		ft_printf_fd(2, "pipex: \"%s\": command not found\n", *splitted_cmd);
+		ft_printf_fd(2, "pipex: \"%s\": Command not found\n", *splitted_cmd);
 		ft_free_triptr(&splitted_cmd);
 		exit(127);
 	}

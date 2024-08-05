@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:56:32 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 14:24:02 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	create_pipe(int *pipe_id)
 {
@@ -44,7 +44,7 @@ int	skip_quotes(char *str, int i)
 		i++;
 	if (str[i] != quote)
 	{
-		ft_printf_fd(2, "pipex: unmatched single quote\n");
+		ft_printf_fd(2, "pipex: Missing %c\n", quote);
 		exit (1);
 	}
 	return (i);
