@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 12:56:32 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/07 09:36:31 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*read_line_from_stdin(int *pipe_id, int index)
 	char	c;
 	char	*line;
 
-	buffer_size = 1024;
+	buffer_size = BUFFER_SIZE;
 	line = (char *)ft_calloc(buffer_size, sizeof(char));
 	if (!line)
 		exit(1);
@@ -48,7 +48,7 @@ static char	*read_line_from_stdin(int *pipe_id, int index)
 		line[index++] = c;
 		if (index >= buffer_size)
 		{
-			buffer_size *= 2;
+			buffer_size += BUFFER_SIZE;
 			line = realloc_buffer(line, buffer_size);
 		}
 	}
