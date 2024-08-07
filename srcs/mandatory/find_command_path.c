@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 15:11:40 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/06 12:12:46 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/07 10:00:55 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ static char	**find_envp_path(char **envp, char **command)
 	while (*envp && !ft_strnstr(*envp, "PATH=", 5))
 		envp++;
 	if (!*envp)
-	{
-		ft_printf_fd(2, "pipex: %s: No such file or directory\n", *command);
-		ft_free_triptr(&command);
-		exit(127);
-	}
+		handle_cmd_error(command, "No such file or directory", 1);
 	return (ft_split(*envp + 5, ':'));
 }
 
@@ -62,12 +58,7 @@ char	*find_command_path(char **envp, char **splitted_cmd)
 		if (access(*splitted_cmd, F_OK) == 0)
 			return (ft_strdup(*splitted_cmd));
 		else
-		{
-			ft_printf_fd(2, "pipex: %s: No such file or directory\n",
-				*splitted_cmd);
-			ft_free_triptr(&splitted_cmd);
-			exit(127);
-		}
+			handle_cmd_error(splitted_cmd, "No such file or directory", 1);
 	}
 	envp_paths = find_envp_path(envp, splitted_cmd);
 	command_path = get_command_path(envp_paths, *splitted_cmd);

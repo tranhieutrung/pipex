@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/07 09:36:26 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/07 09:57:37 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		skip_word(char *command, int i);
 
 // HANDLE ERRORS //
 void	handle_exec_error(char *command_path, char **splitted_command);
+void	handle_cmd_error(char **command, char *message, int free_pt);
 void	handle_open_error(char *name, int pipe_num);
 void	handle_fork_error(int *fd);
 void	handle_read_error(int *fd);
