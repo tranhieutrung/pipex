@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:06:57 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/07 10:09:22 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ void	excecute_command(t_pipex *pipex, char *command)
 		exit(1);
 	command_path = find_command_path(pipex->envp, splitted_cmd);
 	if (!command_path)
-	{
-		ft_printf_fd(2, "pipex: \"%s\": Command not found\n", *splitted_cmd);
-		ft_free_triptr(&splitted_cmd);
-		exit(127);
-	}
+		handle_cmd_error(splitted_cmd, "Command not found", 1);
 	execve(command_path, splitted_cmd, pipex->envp);
 	handle_exec_error(command_path, splitted_cmd);
 }
