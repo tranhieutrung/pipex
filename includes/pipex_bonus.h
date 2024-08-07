@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 23:54:56 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 23:22:52 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/07 09:36:26 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdio.h>
 # include <errno.h>
 # include <string.h>
+
+# define BUFFER_SIZE 1024
 
 typedef struct s_pipex
 {
