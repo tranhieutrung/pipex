@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 22:37:08 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 22:22:45 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/07 09:56:01 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,7 @@ char	**split_command(char *command)
 	if (!command)
 		return (NULL);
 	if (ft_is_all_white_spaces(command))
-	{
-		ft_printf_fd(2, "pipex: %s: Command not found\n", command);
-		exit (127);
-	}
+		handle_cmd_error(&command, "Command not found", 0);
 	words = count_words(command);
 	array = (char **)ft_calloc((words + 1), sizeof(char *));
 	if (!array)

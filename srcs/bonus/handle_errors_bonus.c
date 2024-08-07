@@ -6,7 +6,7 @@
 /*   By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 21:58:15 by hitran            #+#    #+#             */
-/*   Updated: 2024/08/05 23:38:13 by hitran           ###   ########.fr       */
+/*   Updated: 2024/08/07 09:57:17 by hitran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ void	handle_exec_error(char *command_path, char **splitted_cmd)
 		free(command_path);
 	ft_free_triptr(&splitted_cmd);
 	exit(126);
+}
+
+void	handle_cmd_error(char **command, char *message, int free_pt)
+{
+	ft_printf_fd(2, "pipex: %s: %s\n", *command, message);
+	if (free_pt)
+		ft_free_triptr(&command);
+	exit(127);
 }
 
 void	handle_open_error(char *name, int pipe_num)
