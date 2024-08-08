@@ -32,8 +32,8 @@ Use this path information to construct the full path for execve().
 ## Result
 Actual Status : finished.
 
-https://github.com/tranhieutrung/images/blob/06caf65ec6c95c3abaca19caa980069a3a4b0a39/pipex_result.png
-
+![Pipex Result](https://github.com/tranhieutrung/images/blob/06caf65ec6c95c3abaca19caa980069a3a4b0a39/pipex_result.png
+)
 ## Contribution
 If you'd like to contribute to the project, please create a pull request on GitHub. Please adhere to the contribution guidelines outlined in the CONTRIBUTING.md file.
 
