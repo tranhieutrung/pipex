@@ -6,7 +6,7 @@
 #    By: hitran <hitran@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/07 12:20:30 by hitran            #+#    #+#              #
-#    Updated: 2024/08/05 23:37:26 by hitran           ###   ########.fr        #
+#    Updated: 2025/03/03 09:50:45 by hitran           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ MYLIB_DIR	 	= ./mylib
 
 # Source files by directory
 MAN_FILES 		= 	execute_pipex.c 									\
-					find_command_path.c			spit_command.c			\
+					find_command_path.c			split_command.c			\
 					utils.c						handle_errors.c
 					
 BONUS_FILES 	= 	execute_pipex_bonus.c 		read_here_doc_bonus.c 	\
-					find_command_path_bonus.c	spit_command_bonus.c	\
+					find_command_path_bonus.c	split_command_bonus.c	\
 					utils_bonus.c				handle_errors_bonus.c
 
 MAN_SRCS		= 	main.c $(addprefix $(MAN_DIR)/, $(MAN_FILES))
